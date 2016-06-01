@@ -44,6 +44,10 @@ var FloatMathJS = {
      */
     arraySum: function (arr, decimals) {
         'use strict';
+        
+        var self = this;
+        var sum = 0;
+
         if (typeof arr !== 'object' || typeof arr.length !== 'number') {
             throw new Error(this.VALID_ARRAY);
         }
@@ -51,9 +55,6 @@ var FloatMathJS = {
         if (!checkIfAllNumbers(arr)) {
             throw new Error(this.VALID_NUMBER);
         }
-
-        var self = this,
-            sum = 0;
 
         decimals = this.makeSafeInteger(decimals, 1, 2);
 
@@ -73,9 +74,11 @@ var FloatMathJS = {
      */
     checkIfAllNumbers: function(arr) {
         'use strict';
+        
         if (arr && arr.length && arr.every) {
             return arr.every(this.isNumber);
         }
+        
         return false;
     },
 
@@ -105,12 +108,14 @@ var FloatMathJS = {
     roundToDecimals: function (value, decimals) {
         'use strict';
 
+        var decimalMultiplier;
+
         if (typeof value !== 'number') {
             throw new Error(this.ROUND_ERROR);
         }
-
-        var decimalMultiplier = Math.pow(10, decimals);
+        
         decimals = this.makeSafeInteger(decimals, 1, 2);
+        decimalMultiplier = Math.pow(10, decimals);
         value = value * decimalMultiplier;
 
         return Math.round(value) / decimalMultiplier;
